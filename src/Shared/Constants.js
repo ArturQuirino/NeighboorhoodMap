@@ -1,5 +1,1 @@
-class Constants {
-    api_google_maps = "";
-}
-
-export default Constants;
+export const api_google_maps = "-";
