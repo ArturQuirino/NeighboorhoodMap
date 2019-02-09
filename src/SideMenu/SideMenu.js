@@ -14,7 +14,8 @@ export class SideMenu extends Component {
 const sideMenuContainerStyle = {
     display: 'flex',
     flexDirection: 'column',
-    minHeight:  '100%'
+    minHeight:  '100%',
+    padding: '20px'
 };
 
 export default SideMenu;
