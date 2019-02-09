@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import logo from './logo.svg';
 import Header from './Header/Header';
 import SideMenu from './SideMenu/SideMenu';
 import Map from './Map/Map';
