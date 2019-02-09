@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 
-import Constants from '../Shared/Constants';
+import * as Constants from '../Shared/Constants';
  
 class Map extends Component {
   static defaultProps = {
