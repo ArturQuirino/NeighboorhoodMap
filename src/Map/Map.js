@@ -17,7 +17,8 @@ class Map extends Component {
         zoom: 14.78,
         popularLocations: [
             {lat: -18.2449266, lng: -43.6002839, name: 'Casa de Juscelino'},
-            {lat: -18.2466894, lng: -43.5967809, name: 'Casa de chica da silva'}
+            {lat: -18.2466894, lng: -43.5967809, name: 'Casa de chica da silva'},
+            {lat: -18.2438669, lng: -43.5982078, name: 'Estátua de Juscelino'}
         ]
     };
     
