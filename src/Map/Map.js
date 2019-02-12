@@ -29,7 +29,8 @@ class Map extends Component {
                 <Marker 
                     lat={location.lat}
                     lng={location.lng}
-                    text={location.name}>
+                    text={location.name}
+                    key={location.id}>
                 </Marker>
             ))}
             </GoogleMapReact>

@@ -6,7 +6,8 @@ export class SideMenu extends Component {
 
 
     static props = {
-        myLocations: PropTypes.array
+        myLocations: PropTypes.array,
+        filterLocations: PropTypes.func
     }
 
     state = {
@@ -34,7 +35,7 @@ export class SideMenu extends Component {
                 }
                 value={this.state.value}
                 onChange={e => this.setState({ value: e.target.value })}
-                onSelect={value => this.setState({ value })}
+                onSelect={value => this.props.filterLocations(value)}
             />
         </div>
         )
