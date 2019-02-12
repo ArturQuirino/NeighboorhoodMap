@@ -5,23 +5,29 @@ import SideMenu from './SideMenu/SideMenu';
 import Map from './Map/Map';
 
 class App extends Component {
-  render() {
-    return (
-      <div style={appStyle}>
-        <div style={headerStyle}>
-            <Header/>
+    myLocations = [
+        {lat: -18.2449266, lng: -43.6002839, name: 'Casa de Juscelino'},
+        {lat: -18.2466894, lng: -43.5967809, name: 'Casa de chica da silva'},
+        {lat: -18.2438669, lng: -43.5982078, name: 'Estátua de Juscelino'}
+    ]
+
+    render() {
+        return (
+        <div style={appStyle}>
+            <div style={headerStyle}>
+                <Header/>
+            </div>
+            
+            <div style={sideMenuStyle}>
+                <SideMenu myLocations={this.myLocations}/>
+            </div>
+            
+            <div style={mapStyle}>
+                <Map myLocations={this.myLocations}/>
+            </div>
         </div>
-        
-        <div style={sideMenuStyle}>
-            <SideMenu/>
-        </div>
-        
-        <div style={mapStyle}>
-            <Map/>
-        </div>
-      </div>
-    );
-  }
+        );
+    }
 }
 
 const appStyle = {

@@ -7,19 +7,14 @@ import Marker from './Marker';
  
 class Map extends Component {
     static props = {
-        popularLocations: PropTypes.array
+        myLocations: PropTypes.array
     }
     static defaultProps = {
         center: {
         lat: -18.2404174,
         lng: -43.6059877
         },
-        zoom: 14.78,
-        popularLocations: [
-            {lat: -18.2449266, lng: -43.6002839, name: 'Casa de Juscelino'},
-            {lat: -18.2466894, lng: -43.5967809, name: 'Casa de chica da silva'},
-            {lat: -18.2438669, lng: -43.5982078, name: 'Estátua de Juscelino'}
-        ]
+        zoom: 14.78
     };
     
     render() {
@@ -30,7 +25,7 @@ class Map extends Component {
             defaultCenter={this.props.center}
             defaultZoom={this.props.zoom}
             >
-            {this.props.popularLocations.map(location => (
+            {this.props.myLocations.map(location => (
                 <Marker 
                     lat={location.lat}
                     lng={location.lng}
