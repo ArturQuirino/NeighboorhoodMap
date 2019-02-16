@@ -3,7 +3,7 @@ import { PropTypes } from "prop-types";
 import AutoComplete from "react-autocomplete";
 import { List, ListItem, ListItemText } from "@material-ui/core";
 
-export class SideMenu extends Component {
+class SideMenu extends Component {
   static props = {
     myLocations: PropTypes.array,
     filterLocations: PropTypes.func
@@ -17,9 +17,9 @@ export class SideMenu extends Component {
     myLocations: []
   };
 
-  handleListItemClick = (name) => {
-    this.props.filterLocations(name)
-  }
+  handleListItemClick = name => {
+    this.props.filterLocations(name);
+  };
 
   render() {
     return (
@@ -55,13 +55,21 @@ export class SideMenu extends Component {
 
         <List>
           {this.props.myLocations.map(loc => (
-            <ListItem button key={loc.id} onClick={() => this.handleListItemClick(loc.name)}>
+            <ListItem
+              button
+              key={loc.id}
+              onClick={() => this.handleListItemClick(loc.name)}
+            >
               <ListItemText primary={loc.name} />
             </ListItem>
           ))}
-          <ListItem button key='-1' onClick={() => this.handleListItemClick('')}>
-            <ListItemText primary='All Places' />
-        </ListItem>
+          <ListItem
+            button
+            key="-1"
+            onClick={() => this.handleListItemClick("")}
+          >
+            <ListItemText primary="All Places" />
+          </ListItem>
         </List>
       </div>
     );
