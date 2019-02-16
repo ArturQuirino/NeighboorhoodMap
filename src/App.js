@@ -19,10 +19,20 @@ class App extends Component {
     };
 
     filterLocations = (searchedLocation) => {
-        console.log(searchedLocation)
-        this.setState(state => ({
-            filteredLocations: state.allMyLocations.filter(location => location.name === searchedLocation)
-        }))
+        debugger;
+        let filteredLocations = this.state.allMyLocations.filter(location => location.name === searchedLocation);
+        if(filteredLocations.length === 0){
+            this.setState(state => ({
+                filteredLocations: state.allMyLocations
+            }))
+        }
+        else {
+            this.setState(state => ({
+                filteredLocations: state.allMyLocations.filter(location => location.name === searchedLocation)
+            }))
+        }
+
+
     }
 
     render() {

@@ -34,8 +34,14 @@ export class SideMenu extends Component {
                 </div>
                 }
                 value={this.state.value}
-                onChange={e => this.setState({ value: e.target.value })}
-                onSelect={value => this.props.filterLocations(value)}
+                onChange={e => {
+                    this.setState({ value: e.target.value });
+                    this.props.filterLocations(e.target.value);
+                }}
+                onSelect={value => {
+                    this.props.filterLocations(value);
+                    this.setState({value})
+                }}
             />
         </div>
         )
