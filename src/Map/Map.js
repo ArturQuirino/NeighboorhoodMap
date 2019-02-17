@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import GoogleMapReact from 'google-map-react';
-
-import * as Constants from '../Shared/Constants';
-import Marker from './Marker';
 
 
 class Map extends Component {
   static map;
 
+  static markers;
+
   static infoWindow;
+
+  constructor(props) {
+    super(props);
+    this.markers = [];
+  }
 
   componentDidMount() {
     const { google } = window;
@@ -24,11 +27,20 @@ class Map extends Component {
 
   setMap() {
     const { google } = window;
-    const { zoom, center, myLocations } = this.props;
+    const { zoom, center } = this.props;
     this.map = new google.maps.Map(
       document.getElementById('map'), { zoom, center },
     );
     this.infoWindow = new google.maps.InfoWindow();
+    this.setMarkers();
+  }
+
+  setMarkers() {
+    const { google } = window;
+    const { myLocations } = this.props;
+    this.markers.forEach((mark) => {
+      mark.setMap(null);
+    });
     myLocations.forEach((location) => {
       const marker = new google.maps.Marker({
         position: location,
@@ -39,6 +51,7 @@ class Map extends Component {
       marker.addListener('click', function addClickListenerToMarker() {
         self.populateInfoWindow(this);
       });
+      this.markers.push(marker);
     });
   }
 
@@ -58,6 +71,7 @@ class Map extends Component {
   }
 
   render() {
+    this.setMarkers();
     return (
       <div id="map" style={{ height: '100%', width: '100%' }} />
     );
