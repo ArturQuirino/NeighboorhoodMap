@@ -9,6 +9,8 @@ import Marker from './Marker';
 class Map extends Component {
   static map;
 
+  static infoWindow;
+
   componentDidMount() {
     const { google } = window;
     if (!google) {
@@ -26,30 +28,38 @@ class Map extends Component {
     this.map = new google.maps.Map(
       document.getElementById('map'), { zoom, center },
     );
+    this.infoWindow = new google.maps.InfoWindow();
     myLocations.forEach((location) => {
-      const marker = new google.maps.Marker({ position: location, map: this.map });
+      const marker = new google.maps.Marker({
+        position: location,
+        map: this.map,
+        title: location.name,
+      });
+      const self = this;
+      marker.addListener('click', function addClickListenerToMarker() {
+        self.populateInfoWindow(this);
+      });
     });
+  }
 
+  populateInfoWindow(marker) {
+    // Check to make sure the infowindow is not already opened on this marker.
+    if (this.infoWindow.marker !== marker) {
+      // Clear the infowindow content to give the streetview time to load.
+      this.infoWindow.setContent(`<div> ${marker.title} </div><div id="pano"></div>`);
+      this.infoWindow.marker = marker;
+      // Make sure the marker property is cleared if the infowindow is closed.
+      this.infoWindow.addListener('closeclick', () => {
+        this.infoWindow.marker = null;
+      });
+      // Open the infowindow on the correct marker.
+      this.infoWindow.open(this.map, marker);
+    }
   }
 
   render() {
     return (
-      <div id="map" style={{ height: '100%', width: '100%' }}>
-        {/* <GoogleMapReact
-          bootstrapURLKeys={{ key: Constants.api_google_maps }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
-        >
-          {this.props.myLocations.map(location => (
-            <Marker
-              lat={location.lat}
-              lng={location.lng}
-              text={location.name}
-              key={location.id}
-            />
-          ))}
-        </GoogleMapReact> */}
-      </div>
+      <div id="map" style={{ height: '100%', width: '100%' }} />
     );
   }
 }
