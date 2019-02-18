@@ -49,31 +49,26 @@ class App extends Component {
   };
 
   appStyle = {
-    height: '100vh',
-    display: 'grid',
-    gridTemplateColumns: '25% 75%',
-    gridTemplateRows: '15% 85%',
+    display: 'flex',
+    flexDirection: 'column',
   };
 
   headerStyle = {
-    gridColumnStart: 1,
-    gridColumnEnd: 3,
-    gridRowStart: 1,
-    gridRowEnd: 2,
+    height: '15%',
   };
 
+  mainStyle = {
+    height: '85vh',
+  }
+
   sideMenuStyle = {
-    gridColumnStart: 1,
-    gridColumnEnd: 2,
-    gridRowStart: 2,
-    gridRowEnd: 3,
+    
   };
 
   mapStyle = {
-    gridColumnStart: 2,
-    gridColumnEnd: 3,
-    gridRowStart: 2,
-    gridRowEnd: 3,
+    width: '100%',
+    minHeight: '200px',
+    height: '50%',
   };
 
   filterLocations = (searchedLocation) => {
@@ -98,20 +93,24 @@ class App extends Component {
     const { allMyLocations, filteredLocations } = this.state;
     return (
       <div style={this.appStyle}>
-        <div style={this.headerStyle}>
+        <header style={this.headerStyle}>
           <Header />
-        </div>
+        </header>
+        <main style={this.mainStyle}>
+          <div style={this.mapStyle}>
+            <Map myLocations={filteredLocations} />
+          </div>
+          <div style={this.sideMenuStyle}>
+            <SideMenu
+              myLocations={allMyLocations}
+              filterLocations={this.filterLocations}
+            />
+          </div>
 
-        <div style={this.sideMenuStyle}>
-          <SideMenu
-            myLocations={allMyLocations}
-            filterLocations={this.filterLocations}
-          />
-        </div>
+          
+        </main>
 
-        <div style={this.mapStyle}>
-          <Map myLocations={filteredLocations} />
-        </div>
+        
       </div>
     );
   }

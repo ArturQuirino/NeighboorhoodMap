@@ -1,56 +1,41 @@
-import React, { Component } from "react";
-import { PropTypes } from "prop-types";
-import AutoComplete from "react-autocomplete";
-import { List, ListItem, ListItemText } from "@material-ui/core";
+import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
+import { List, ListItem, ListItemText } from '@material-ui/core';
 
 class SideMenu extends Component {
   static props = {
     myLocations: PropTypes.array,
-    filterLocations: PropTypes.func
+    filterLocations: PropTypes.func,
   };
 
   state = {
-    value: ""
+    value: '',
   };
 
   static defaultProps = {
-    myLocations: []
+    myLocations: [],
   };
 
-  handleListItemClick = name => {
+  sideMenuContainerStyle = {
+    display: 'flex',
+    padding: '20px',
+    flexWrap: 'wrap',
+  };
+
+  autoCompleteStyle = {
+    margin: '0 0 30% 0',
+    width: '50%',
+  };
+
+  handleListItemClick = (name) => {
     this.props.filterLocations(name);
   };
 
   render() {
     return (
-      <div style={sideMenuContainerStyle}>
-        <div style={autoCompleteStyle}>
-          <AutoComplete
-            items={this.props.myLocations}
-            shouldItemRender={(item, value) =>
-              item.name.toLowerCase().indexOf(value.toLowerCase()) > -1
-            }
-            getItemValue={item => item.name}
-            renderItem={(item, highlighted) => (
-              <div
-                key={item.name}
-                style={{
-                  backgroundColor: highlighted ? "#eee" : "transparent"
-                }}
-              >
-                {item.name}
-              </div>
-            )}
-            value={this.state.value}
-            onChange={e => {
-              this.setState({ value: e.target.value });
-              this.props.filterLocations(e.target.value);
-            }}
-            onSelect={value => {
-              this.props.filterLocations(value);
-              this.setState({ value });
-            }}
-          />
+      <div style={this.sideMenuContainerStyle}>
+        <div style={this.autoCompleteStyle}>
+          <input id="autocompleteinput" />
         </div>
 
         <List>
@@ -66,7 +51,7 @@ class SideMenu extends Component {
           <ListItem
             button
             key="-1"
-            onClick={() => this.handleListItemClick("")}
+            onClick={() => this.handleListItemClick('')}
           >
             <ListItemText primary="All Places" />
           </ListItem>
@@ -75,16 +60,5 @@ class SideMenu extends Component {
     );
   }
 }
-
-const sideMenuContainerStyle = {
-  display: "flex",
-  flexDirection: "column",
-  minHeight: "100%",
-  padding: "20px"
-};
-
-const autoCompleteStyle = {
-  margin: "0 0 30% 0"
-};
 
 export default SideMenu;
