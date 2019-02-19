@@ -138,7 +138,11 @@ class Map extends Component {
     // Check to make sure the infowindow is not already opened on this marker.
     if (this.infoWindow.marker !== marker) {
       // Clear the infowindow content to give the streetview time to load.
-      this.infoWindow.setContent(`<div> ${marker.title} </div><div id="pano"></div>`);
+      fetch('https://en.wikipedia.org/api/rest_v1/page/html/Lake_Pampulha').then(response => response.text())
+        .then((dados) => {
+          this.infoWindow.setContent(dados);
+        });
+
       this.infoWindow.marker = marker;
       // Make sure the marker property is cleared if the infowindow is closed.
       this.infoWindow.addListener('closeclick', () => {

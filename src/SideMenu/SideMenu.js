@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { List, ListItem, ListItemText } from '@material-ui/core';
+import AutoComplete from 'react-autocomplete';
 
 class SideMenu extends Component {
-  static props = {
-    myLocations: PropTypes.array,
-    filterLocations: PropTypes.func,
-  };
-
   state = {
     value: '',
   };
@@ -28,18 +24,46 @@ class SideMenu extends Component {
   };
 
   handleListItemClick = (name) => {
-    this.props.filterLocations(name);
+    const { filterLocations } = this.props;
+    filterLocations(name);
   };
 
   render() {
+    const { myLocations, filterLocations } = this.props;
+    const { value } = this.state;
     return (
       <div style={this.sideMenuContainerStyle}>
         <div style={this.autoCompleteStyle}>
-          <input id="autocompleteinput" />
+          <AutoComplete
+            items={myLocations}
+            shouldItemRender={
+              (item, valueItem) => item.name.toLowerCase().indexOf(valueItem.toLowerCase()) > -1
+            }
+            getItemValue={item => item.name}
+            renderItem={(item, highlighted) => (
+              <div
+                key={item.name}
+                style={{
+                  backgroundColor: highlighted ? '#eee' : 'transparent'
+                }}
+              >
+                {item.name}
+              </div>
+            )}
+            value={value}
+            onChange={(e) => {
+              this.setState({ value: e.target.value });
+              filterLocations(e.target.value);
+            }}
+            onSelect={(valueSelected) => {
+              filterLocations(valueSelected);
+              this.setState({ value: valueSelected });
+            }}
+          />
         </div>
 
         <List>
-          {this.props.myLocations.map(loc => (
+          {myLocations.map(loc => (
             <ListItem
               button
               key={loc.id}
@@ -60,5 +84,10 @@ class SideMenu extends Component {
     );
   }
 }
+
+SideMenu.propTypes = {
+  myLocations: PropTypes.array,
+  filterLocations: PropTypes.func.isRequired,
+};
 
 export default SideMenu;

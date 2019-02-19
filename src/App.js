@@ -10,20 +10,23 @@ class App extends Component {
       {
         lat: -18.2449266,
         lng: -43.6002839,
-        name: 'Casa de Juscelino',
+        name: 'Lagoa da Pampulha',
         id: 1,
+        wikiTitle: 'Lake_Pampulha',
       },
       {
         lat: -18.2466894,
         lng: -43.5967809,
         name: 'Casa de chica da silva',
         id: 2,
+        wikiTitle: 'Lake_Pampulha',
       },
       {
         lat: -18.2438669,
         lng: -43.5982078,
         name: 'Estátua de Juscelino',
         id: 3,
+        wikiTitle: 'Lake_Pampulha',
       },
     ],
     filteredLocations: [
@@ -32,18 +35,21 @@ class App extends Component {
         lng: -43.6002839,
         name: 'Casa de Juscelino',
         id: 1,
+        wikiTitle: 'Lake_Pampulha',
       },
       {
         lat: -18.2466894,
         lng: -43.5967809,
         name: 'Casa de chica da silva',
         id: 2,
+        wikiTitle: 'Lake_Pampulha',
       },
       {
         lat: -18.2438669,
         lng: -43.5982078,
         name: 'Estátua de Juscelino',
         id: 3,
+        wikiTitle: 'Lake_Pampulha',
       },
     ],
   };
@@ -60,10 +66,6 @@ class App extends Component {
   mainStyle = {
     height: '85vh',
   }
-
-  sideMenuStyle = {
-    
-  };
 
   mapStyle = {
     width: '100%',
@@ -90,7 +92,7 @@ class App extends Component {
   };
 
   render() {
-    const { allMyLocations, filteredLocations } = this.state;
+    const { filteredLocations } = this.state;
     return (
       <div style={this.appStyle}>
         <header style={this.headerStyle}>
@@ -102,7 +104,7 @@ class App extends Component {
           </div>
           <div style={this.sideMenuStyle}>
             <SideMenu
-              myLocations={allMyLocations}
+              myLocations={filteredLocations}
               filterLocations={this.filterLocations}
             />
           </div>
