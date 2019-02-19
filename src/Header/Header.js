@@ -1,20 +1,18 @@
-import React, { Component } from 'react';
-
-class Header extends Component {
-    render () {
-        return (
-            <div style={headerStyle}>
-                <h1>My Neighborhood</h1>
-            </div>
-        )
-    }
-}
+import React from 'react';
 
 const headerStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 
+};
+
+function Header() {
+  return (
+    <div style={headerStyle}>
+      <h1>My Neighborhood - Belo Horizonte - Brazil</h1>
+    </div>
+  );
 }
 
 export default Header;

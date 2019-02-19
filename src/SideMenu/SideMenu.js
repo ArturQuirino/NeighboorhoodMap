@@ -44,7 +44,7 @@ class SideMenu extends Component {
               <div
                 key={item.name}
                 style={{
-                  backgroundColor: highlighted ? '#eee' : 'transparent'
+                  backgroundColor: highlighted ? '#eee' : 'transparent',
                 }}
               >
                 {item.name}

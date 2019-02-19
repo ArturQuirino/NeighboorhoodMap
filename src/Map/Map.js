@@ -37,11 +37,9 @@ class Map extends Component {
     this.infoWindow = new google.maps.InfoWindow();
     if (this.map.getBounds()) {
       this.setMarkers();
-      this.setSearchBox();
     } else {
       setTimeout(() => {
         this.setMarkers();
-        this.setSearchBox();
       }, 3000);
     }
   }
@@ -63,31 +61,10 @@ class Map extends Component {
       });
       const self = this;
       marker.addListener('click', function addClickListenerToMarker() {
-        self.populateInfoWindow(this);
+        self.populateInfoWindow(this, location);
       });
       this.markers.push(marker);
     });
-  }
-
-  setSearchBox() {
-    const { google } = window;
-    const input = document.getElementById('autocompleteinput');
-    const searchBox = new google.maps.places.SearchBox(input);
-    searchBox.setBounds(this.map.getBounds());
-    const self = this;
-    searchBox.addListener('places_changed', function addPlacesChangedEvent() {
-      self.searchBoxPlaces(this);
-    });
-  }
-
-  searchBoxPlaces(searchBox) {
-    this.hideMarkers();
-    const places = searchBox.getPlaces();
-    // For each place, get the icon, name and location.
-    this.createMarkersForPlaces(places);
-    if (places.length === 0) {
-      window.alert('We did not find any places matching that search!');
-    }
   }
 
   hideMarkers() {
@@ -99,46 +76,11 @@ class Map extends Component {
     }
   }
 
-  createMarkersForPlaces(places) {
-    const { google } = window;
-    const bounds = new google.maps.LatLngBounds();
-    for (let i = 0; i < places.length; i += 1) {
-      const place = places[i];
-      const icon = {
-        url: place.icon,
-        size: new google.maps.Size(35, 35),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(15, 34),
-        scaledSize: new google.maps.Size(25, 25),
-      };
-      // Create a marker for each place.
-      const marker = new google.maps.Marker({
-        map: this.map,
-        icon,
-        title: place.name,
-        position: place.geometry.location,
-        id: place.id,
-      });
-      // If a marker is clicked, do a place details search on it in the next function.
-      // marker.addListener('click', function() {
-      //   getPlacesDetails(this, place);
-      // });
-      this.placeMarkers.push(marker);
-      if (place.geometry.viewport) {
-        // Only geocodes have viewport.
-        bounds.union(place.geometry.viewport);
-      } else {
-        bounds.extend(place.geometry.location);
-      }
-    }
-    this.map.fitBounds(bounds);
-  }
-
-  populateInfoWindow(marker) {
+  populateInfoWindow(marker, location) {
     // Check to make sure the infowindow is not already opened on this marker.
     if (this.infoWindow.marker !== marker) {
       // Clear the infowindow content to give the streetview time to load.
-      fetch('https://en.wikipedia.org/api/rest_v1/page/html/Lake_Pampulha').then(response => response.text())
+      fetch(`https://en.wikipedia.org/api/rest_v1/page/html/${location.wikiTitle}`).then(response => response.text())
         .then((dados) => {
           this.infoWindow.setContent(dados);
         });
@@ -169,10 +111,10 @@ Map.propTypes = {
 
 Map.defaultProps = {
   center: {
-    lat: -18.2404174,
-    lng: -43.6059877,
+    lat: -19.9166813,
+    lng: -43.9344931,
   },
-  zoom: 14.78,
+  zoom: 11,
   myLocations: [],
 };
 
