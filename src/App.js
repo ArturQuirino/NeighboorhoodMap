@@ -41,6 +41,7 @@ class App extends Component {
 
   headerStyle = {
     height: '15%',
+    textAlign: 'center',
   };
 
   mainStyle = {

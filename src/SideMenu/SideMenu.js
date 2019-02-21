@@ -16,6 +16,7 @@ class SideMenu extends Component {
     display: 'flex',
     padding: '20px',
     flexWrap: 'wrap',
+    justifyContent: 'space-around',
   };
 
   autoCompleteStyle = {
@@ -34,6 +35,7 @@ class SideMenu extends Component {
     return (
       <div style={this.sideMenuContainerStyle}>
         <div style={this.autoCompleteStyle}>
+          <label htmlFor="autoComplete">Search Box</label>
           <AutoComplete
             items={myLocations}
             shouldItemRender={
@@ -59,6 +61,7 @@ class SideMenu extends Component {
               filterLocations(valueSelected);
               this.setState({ value: valueSelected });
             }}
+            id="autoComplete"
           />
         </div>
 

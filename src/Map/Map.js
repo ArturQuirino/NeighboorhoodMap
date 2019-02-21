@@ -22,7 +22,7 @@ class Map extends Component {
     if (!google) {
       setTimeout(() => {
         this.setMap();
-      }, 3000);
+      }, 4000);
     } else {
       this.setMap();
     }
@@ -79,10 +79,13 @@ class Map extends Component {
   populateInfoWindow(marker, location) {
     // Check to make sure the infowindow is not already opened on this marker.
     if (this.infoWindow.marker !== marker) {
-      // Clear the infowindow content to give the streetview time to load.
+      // Open infowindow with information of that place from wikipedia.
       fetch(`https://en.wikipedia.org/api/rest_v1/page/html/${location.wikiTitle}`).then(response => response.text())
         .then((dados) => {
           this.infoWindow.setContent(dados);
+        })
+        .catch(() => {
+          this.infoWindow.setContent('There was an error in your request. Try again later.');
         });
 
       this.infoWindow.marker = marker;
