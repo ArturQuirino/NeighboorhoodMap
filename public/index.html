@@ -26,6 +26,11 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2ZWG8uH4wKhdIhqiAvyRkgaVaIIORkQQ&libraries=places">
     </script>
+    <script>
+      function gm_authFailure() { 
+          alert("Unfortunately there was an authentication error loading the google maps api."); //
+      };
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
