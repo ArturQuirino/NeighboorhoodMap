@@ -50,7 +50,7 @@ class App extends Component {
 
   mapStyle = {
     width: '100%',
-    minHeight: '200px',
+    minHeight: '300px',
     height: '50%',
   };
 

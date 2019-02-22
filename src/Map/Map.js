@@ -15,56 +15,66 @@ class Map extends Component {
     super(props);
     this.markers = [];
     this.placeMarkers = [];
+    this.state = {
+      googleMapIsLoaded: false,
+    };
   }
 
   componentDidMount() {
-    const { google } = window;
-    if (!google) {
-      setTimeout(() => {
-        this.setMap();
-      }, 4000);
-    } else {
-      this.setMap();
-    }
+    this.setMap();
   }
 
   setMap() {
     const { google } = window;
-    const { zoom, center } = this.props;
-    this.map = new google.maps.Map(
-      document.getElementById('map'), { zoom, center },
-    );
-    this.infoWindow = new google.maps.InfoWindow();
-    if (this.map.getBounds()) {
+    this.setState(() => {
+      return { googleMapIsLoaded: !!google };
+    });
+    if (google) {
+      const { zoom, center } = this.props;
+      this.map = new google.maps.Map(
+        document.getElementById('map'), { zoom, center },
+      );
+      this.infoWindow = new google.maps.InfoWindow();
       this.setMarkers();
     } else {
       setTimeout(() => {
-        this.setMarkers();
-      }, 3000);
+        this.setMap();
+      }, 1000);
     }
   }
 
   setMarkers() {
     const { google } = window;
-    const { myLocations } = this.props;
-    this.markers.forEach((mark) => {
-      mark.setMap(null);
-    });
-    this.placeMarkers.forEach((placeMark) => {
-      placeMark.setMap(null);
-    });
-    myLocations.forEach((location) => {
-      const marker = new google.maps.Marker({
-        position: location,
-        map: this.map,
-        title: location.name,
+    if (this.map && this.map.getBounds()) {
+      const { myLocations } = this.props;
+      this.markers.forEach((mark) => {
+        mark.setMap(null);
       });
-      const self = this;
-      marker.addListener('click', function addClickListenerToMarker() {
-        self.populateInfoWindow(this, location);
+      this.placeMarkers.forEach((placeMark) => {
+        placeMark.setMap(null);
       });
-      this.markers.push(marker);
-    });
+      myLocations.forEach((location) => {
+        const marker = new google.maps.Marker({
+          position: location,
+          map: this.map,
+          title: location.name,
+          animation: google.maps.Animation.DROP,
+        });
+        const self = this;
+        marker.addListener('click', function addClickListenerToMarker() {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+          setTimeout(() => {
+            marker.setAnimation(null);
+          }, 1000);
+          self.populateInfoWindow(this, location);
+        });
+        this.markers.push(marker);
+      });
+    } else {
+      setTimeout(() => {
+        this.setMarkers();
+      }, 1000);
+    }
   }
 
   hideMarkers() {
@@ -100,8 +110,16 @@ class Map extends Component {
 
   render() {
     this.setMarkers();
+    const { googleMapIsLoaded } = this.state;
     return (
-      <div id="map" style={{ minHeight: '200px', width: '100%', height: '100%' }} />
+      <div>
+        <div id="map" style={{ minHeight: '300px', width: '100%', height: '100%' }} />
+        {
+          !googleMapIsLoaded && (
+          <span>Wait until the map is loaded</span>
+          )
+        }
+      </div>
     );
   }
 }
