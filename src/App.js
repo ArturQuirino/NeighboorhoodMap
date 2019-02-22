@@ -26,6 +26,20 @@ const locations = [
     id: 3,
     wikiTitle: 'Mineirão',
   },
+  {
+    lat: -19.8690878,
+    lng: -43.9663841,
+    name: 'Federal University of Minas Gerais',
+    id: 4,
+    wikiTitle: 'Federal_University_of_Minas_Gerais',
+  },
+  {
+    lat: -19.8583967,
+    lng: -43.9790021,
+    name: 'Church of Saint Francis of Assisi',
+    id: 5,
+    wikiTitle: 'Church_of_Saint_Francis_of_Assisi',
+  },
 ];
 
 class App extends Component {
